@@ -98,6 +98,7 @@ endif
 ifeq ($(CONFIG_MJPG_STREAMER_OUTPUT_HTTP),y)
 	$(CP) $(PKG_BUILD_DIR)/output_http.so $(1)/usr/lib
 	$(INSTALL_DIR) $(1)/www/webcam
+	$(INSTALL_DATA) ./files/robots.txt $(1)/www/webcam
     ifeq ($(CONFIG_MJPG_STREAMER_WWW),y)
 	$(INSTALL_DATA) $(PKG_BUILD_DIR)/www/* $(1)/www/webcam
     else
