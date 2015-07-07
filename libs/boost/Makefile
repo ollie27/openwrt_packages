@@ -17,7 +17,7 @@ include $(INCLUDE_DIR)/target.mk
 
 PKG_NAME:=boost
 PKG_VERSION:=1_58_0
-PKG_RELEASE:=4
+PKG_RELEASE:=5
 
 PKG_SOURCE:=$(PKG_NAME)_$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=@SF/boost
@@ -65,6 +65,10 @@ endef
 
 # Create a meta-package of dependent libraries (for ALL)
 define Package/boost-libs/install
+  true
+endef
+
+define Package/boost/install
   true
 endef
 
@@ -222,16 +226,9 @@ define Build/InstallDev
 		$(1)/usr/include/boost/ \
 		# copies _all_ header files - independent of <--with-library>-argument above
 
-	if [ -d $(PKG_INSTALL_DIR)/lib ]; then \
-		$(INSTALL_DIR) \
-			$(1)/usr/lib; \
-		$(CP) \
-			$(PKG_INSTALL_DIR)/lib/*.a \
-			$(1)/usr/lib/; \
-		$(CP) \
-			$(PKG_INSTALL_DIR)/lib/*.so* \
-			$(1)/usr/lib/; \
-	fi
+	$(INSTALL_DIR) $(1)/usr/lib
+	-$(CP) $(PKG_INSTALL_DIR)/lib/*.a $(1)/usr/lib/
+	-$(CP) $(PKG_INSTALL_DIR)/lib/*.so* $(1)/usr/lib/
 endef
 
 define Host/Install

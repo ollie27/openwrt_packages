@@ -8,15 +8,15 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=squid
-PKG_VERSION:=3.5.2
-PKG_RELEASE:=3
+PKG_VERSION:=3.5.5
+PKG_RELEASE:=1
 
 PKG_LICENSE:=GPL-2.0
 PKG_MAINTAINER:=Luka Perkov <luka@openwrt.org>
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=http://www.squid-cache.org/Versions/v3/3.5/
-PKG_MD5SUM:=0330ec9f69e333c2a81fa4502ba96a22
+PKG_MD5SUM:=9a323a97753143ddd935aed58a0193ae
 
 PKG_BUILD_PARALLEL:=1
 PKG_INSTALL:=1
@@ -89,11 +89,11 @@ CONFIGURE_ARGS += \
 	--disable-arch-native \
 	--with-krb5-config=no \
 	--without-libcap \
-	--without-netfilter-conntrack \
+	--without-netfilter-conntrack
 
 CONFIGURE_VARS += \
 	ac_cv_header_linux_netfilter_ipv4_h=yes \
-	ac_cv_epoll_works=yes \
+	ac_cv_epoll_works=yes
 
 define Build/Compile
 	+$(MAKE) $(PKG_JOBS) -C $(PKG_BUILD_DIR)/lib all
