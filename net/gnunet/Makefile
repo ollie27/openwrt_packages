@@ -8,11 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=gnunet
-PKG_SOURCE_VERSION:=36094
+PKG_SOURCE_VERSION:=36190
 PKG_VERSION:=0.10.1-svn$(PKG_SOURCE_VERSION)
 PKG_RELEASE:=1
 
 # ToDo:
+#  - UCI integration
 #  - break-out {peer,name,data}store for each backend
 #  - package testing stuff
 
@@ -166,6 +167,8 @@ define Package/gnunet/install
 	$(INSTALL_BIN) ./files/gnunet.init $(1)/etc/init.d/gnunet
 	$(INSTALL_DIR) $(1)/lib/upgrade/keep.d
 	$(INSTALL_DATA) ./files/gnunet.upgrade $(1)/lib/upgrade/keep.d/gnunet
+	$(INSTALL_DIR) $(1)/etc/uci-defaults
+	$(INSTALL_BIN) ./files/gnunet.defaults $(1)/etc/uci-defaults/gnunet
 endef
 
 define Build/InstallDev
@@ -188,8 +191,8 @@ PLUGIN_transport-http_client:=transport_http_client transport_https_client
 DEPENDS_transport-http_server:=+libmicrohttpd
 PLUGIN_transport-http_server:=transport_http_server transport_https_server
 
-PLUGIN_transport-wifi:=transport_wlan
-LIBEXEC_transport-wifi:=helper-transport-wlan
+PLUGIN_transport-wlan:=transport_wlan
+LIBEXEC_transport-wlan:=helper-transport-wlan
 
 DEPENDS_experiments:=+libglpk
 PLUGIN_experiments:=ats_mlp ats_ril
