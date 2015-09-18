@@ -8,12 +8,11 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=gnunet
-PKG_SOURCE_VERSION:=36190
+PKG_SOURCE_VERSION:=36242
 PKG_VERSION:=0.10.1-svn$(PKG_SOURCE_VERSION)
 PKG_RELEASE:=1
 
 # ToDo:
-#  - UCI integration
 #  - break-out {peer,name,data}store for each backend
 #  - package testing stuff
 
@@ -31,8 +30,11 @@ PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
+include $(INCLUDE_DIR)/nls.mk
 
 CONFIGURE_ARGS+= \
+	--with-libiconv-prefix="$(ICONV_PREFIX)" \
+	--with-libintl-prefix="$(INTL_PREFIX)" \
 	--with-ltdl \
 	$(if $(CONFIG_PACKAGE_$(PKG_NAME)-mysql),--with-mysql="$(STAGING_DIR)/usr",--without-mysql) \
 	$(if $(CONFIG_PACKAGE_$(PKG_NAME)-pgsql),--with-postgresql="$(STAGING_DIR)/usr/bin/pg_config",--without-postgresql) \
@@ -57,7 +59,7 @@ define Package/gnunet
 $(call Package/gnunet/Default)
   TITLE+= - a peer-to-peer framework focusing on security
   DEPENDS:=+ca-certificates +libgnurl +libgnutls +libidn +libltdl \
-           +libmicrohttpd +libunistring +librt
+           +libmicrohttpd +libunistring +librt $(ICONV_DEPENDS) $(INTL_DEPENDS)
   USERID:=gnunet=400:gnunet=400
   MENU:=1
 endef
@@ -237,7 +239,7 @@ LIBEXEC_transport-bluetooth:=helper-transport-bluetooth
 DEPENDS_utils:=+certtool +openssl-util
 BIN_utils:=gns-proxy-setup-ca transport-certificate-creation
 
-DEPENDS_vpn:=+kmod-tun
+DEPENDS_vpn:=+kmod-tun +iptables
 BIN_vpn:=vpn
 LIB_vpn:=tun vpn
 LIBEXEC_vpn:=daemon-exit daemon-pt helper-exit helper-vpn service-vpn
