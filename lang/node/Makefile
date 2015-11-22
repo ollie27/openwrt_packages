@@ -14,8 +14,10 @@ PKG_RELEASE:=1
 PKG_SOURCE:=node-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=http://nodejs.org/dist/${PKG_VERSION}
 
+HOST_BUILD_DEPENDS:=python/host
 PKG_BUILD_DEPENDS:=python/host
 PKG_INSTALL:=1
+PKG_USE_MIPS16:=0
 
 PKG_MAINTAINER:=John Crispin <blogic@openwrt.org>
 PKG_LICENSE:=
