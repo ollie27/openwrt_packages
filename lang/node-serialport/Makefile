@@ -16,7 +16,7 @@ PKG_SOURCE:=$(PKG_NPM_NAME)-$(PKG_VERSION).tgz
 PKG_SOURCE_URL:=http://registry.npmjs.org/$(PKG_NPM_NAME)/-/
 PKG_MD5SUM:=1eb21082e0aa676b8350182a60230808
 
-PKG_BUILD_DEPENDS:=node
+PKG_BUILD_DEPENDS:=node/host
 PKG_NODE_VERSION:=0.12.7
 
 PKG_MAINTAINER:=John Crispin <blogic@openwrt.org>
@@ -50,7 +50,7 @@ define Build/Compile
 	npm_config_arch=$(CONFIG_ARCH) \
 	npm_config_nodedir=$(BUILD_DIR)/node-v$(PKG_NODE_VERSION)/ \
 	PREFIX="$(PKG_INSTALL_DIR)/usr/" \
-	$(STAGING_DIR_HOST)/bin/npm install -g $(PKG_BUILD_DIR)
+	$(STAGING_DIR)/host/bin/npm install -g $(PKG_BUILD_DIR)
 endef
 
 define Package/node-serialport/install

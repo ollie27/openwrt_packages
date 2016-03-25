@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2006-2015 OpenWrt.org
+# Copyright (C) 2006-2016 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=php
-PKG_VERSION:=5.6.16
+PKG_VERSION:=5.6.19
 PKG_RELEASE:=1
 
 PKG_MAINTAINER:=W. Michael Petullo <mike@flyn.org>, Michael Heimpold <mhei@heimpold.de>
@@ -18,7 +18,7 @@ PKG_LICENSE_FILES:=LICENSE
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=http://www.php.net/distributions/
-PKG_MD5SUM:=3f1d999ed1f9cb5713c9a0161c557f2f
+PKG_MD5SUM:=aab960cc1b2bfbeb00d030a9d42b38bd
 
 PKG_FIXUP:=libtool autoreconf
 PKG_BUILD_PARALLEL:=1
@@ -491,10 +491,10 @@ define Build/InstallDev
 	mkdir -p $(PKG_BUILD_DIR)/staging/usr/bin
 	make -C $(PKG_BUILD_DIR) install INSTALL_ROOT=$(PKG_BUILD_DIR)/staging
 	rm -f $(PKG_BUILD_DIR)/staging/usr/bin/php
-	$(CP) $(PKG_BUILD_DIR)/staging/* $(STAGING_DIR_HOST)
-	sed -i -e "s#prefix='/usr'#prefix='$(STAGING_DIR_HOST)/usr'#" $(STAGING_DIR_HOST)/usr/bin/phpize
-	sed -i -e "s#exec_prefix=\"\`eval echo /usr\`\"#exec_prefix='$(STAGING_DIR_HOST)/usr'#" $(STAGING_DIR_HOST)/usr/bin/phpize
-	sed -i -e "s#prefix=\"/usr\"#prefix=\"$(STAGING_DIR_HOST)/usr\"#" $(STAGING_DIR_HOST)/usr/bin/php-config
+	$(CP) $(PKG_BUILD_DIR)/staging/* $(STAGING_DIR)/host
+	sed -i -e "s#prefix='/usr'#prefix='$(STAGING_DIR)/host/usr'#" $(STAGING_DIR)/host/usr/bin/phpize
+	sed -i -e "s#exec_prefix=\"\`eval echo /usr\`\"#exec_prefix='$(STAGING_DIR)/host/usr'#" $(STAGING_DIR)/host/usr/bin/phpize
+	sed -i -e "s#prefix=\"/usr\"#prefix=\"$(STAGING_DIR)/host/usr\"#" $(STAGING_DIR)/host/usr/bin/php-config
 endef
 
 define BuildModule

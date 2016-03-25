@@ -85,6 +85,7 @@ CONFIGURE_ARGS += \
 	--disable-auth-basic \
 	--disable-arch-native \
 	--with-krb5-config=no \
+	--without-mit-krb5 \
 	--without-libcap \
 	--without-netfilter-conntrack
 
